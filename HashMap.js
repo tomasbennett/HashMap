@@ -46,6 +46,10 @@ export class HashMap {
         for (let i = 0; i < key.length; i++) {
             hashCode = (primeNumber * hashCode + key.charCodeAt(i)) % this.capacity;
         }
+
+        if (hashCode < 0 || hashCode >= this.capacity) {
+            throw new Error("Trying to access index out of bounds");
+        }
         
         return hashCode;
     }
@@ -72,6 +76,7 @@ export class HashMap {
     get(key) {
         const bucketIndex = this.hash(key);
         const bucket = this.buckets[bucketIndex];
+          
 
         for (let i = 0; i < bucket.size; i++) {
             const pair = bucket.at(i);
